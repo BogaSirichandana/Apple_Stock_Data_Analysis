@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An interactive, high-fidelity Apple (AAPL) stock data analysis dashboard with key metrics, visualizations, and automated investment insights.">
+    <meta name="author" content="Siri Chandana Boga">
+    <title>Apple Stock Data Analysis Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Chart.js and PapaParse via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="app.js"></script>
+</head>
+<body>
+    <!-- App Container -->
+    <div id="app-container" class="app-container">
+        
+        <!-- Header / Navbar -->
+        <header id="app-header" class="app-header">
+            <div class="header-logo">
+                <i data-lucide="trending-up" class="logo-icon"></i>
+                <span class="logo-text">AAPL <span class="logo-subtext">Analyzer</span></span>
+            </div>
+            
+            <nav id="app-nav" class="app-nav">
+                <button id="nav-home" class="nav-btn active" onclick="switchTab('home')">
+                    <i data-lucide="home"></i> <span>Home</span>
+                </button>
+                <button id="nav-dashboard" class="nav-btn" onclick="switchTab('dashboard')">
+                    <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
+                </button>
+                <button id="nav-dataset" class="nav-btn" onclick="switchTab('dataset')">
+                    <i data-lucide="table"></i> <span>Dataset</span>
+                </button>
+                <button id="nav-insights" class="nav-btn" onclick="switchTab('insights')">
+                    <i data-lucide="brain-circuit"></i> <span>Insights</span>
+                </button>
+            </nav>
+            
+            <div class="header-actions">
+                <!-- CSV Upload button -->
+                <button id="upload-trigger" class="btn btn-secondary">
+                    <i data-lucide="upload"></i>
+                    <span>Upload CSV</span>
+                </button>
+                <input type="file" id="csv-file-input" accept=".csv" class="hidden-input">
+                
+                <!-- Dark Mode Toggle -->
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark/light mode">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="main-content">
+            
+            <!-- Section 1: Home View -->
+            <section id="view-home" class="view-section active">
+                <div class="hero-container">
+                    <div class="hero-content">
+                        <div class="badge">AAPL Stock Analysis</div>
+                        <h1 class="hero-title">Apple Stock Data Analysis Dashboard</h1>
+                        <p class="hero-subtitle">
+                            Unlock investment insights from historical Apple Inc. (AAPL) stock data. Visualize trends, analyze moving averages, explore the full dataset, and export detailed performance reports.
+                        </p>
+                        <div class="hero-actions">
+                            <button id="hero-explore-btn" class="btn btn-primary btn-lg" onclick="switchTab('dashboard')">
+                                Explore Dashboard <i data-lucide="arrow-right"></i>
+                            </button>
+                            <button id="hero-upload-btn" class="btn btn-outline btn-lg" onclick="document.getElementById('csv-file-input').click()">
+                                Import CSV Data <i data-lucide="file-spreadsheet"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="glass-card visual-card">
+                            <div class="visual-card-header">
+                                <div class="visual-dot red"></div>
+                                <div class="visual-dot yellow"></div>
+                                <div class="visual-dot green"></div>
+                                <span class="visual-title">Apple Inc. Market Trend</span>
+                            </div>
+                            <div class="visual-body">
+                                <div class="price-indicator">
+                                    <div class="price-value">$174.07</div>
+                                    <div class="price-change positive">
+                                        <i data-lucide="arrow-up-right"></i> +1,356.2% <span class="time-label">(1980 - 2022)</span>
+                                    </div>
+                                </div>
+                                <div class="mini-chart-mock">
+                                    <!-- A decorative mini CSS chart to enhance home aesthetics -->
+                                    <div class="chart-bar" style="height: 10%"></div>
+                                    <div class="chart-bar" style="height: 15%"></div>
+                                    <div class="chart-bar" style="height: 12%"></div>
+                                    <div class="chart-bar" style="height: 25%"></div>
+                                    <div class="chart-bar" style="height: 40%"></div>
+                                    <div class="chart-bar" style="height: 35%"></div>
+                                    <div class="chart-bar" style="height: 55%"></div>
+                                    <div class="chart-bar" style="height: 70%"></div>
+                                    <div class="chart-bar" style="height: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="home-features">
+                    <h2 class="section-heading text-center">Interactive Features</h2>
+                    <div class="features-grid">
+                        <div class="glass-card feature-card">
+                            <div class="feature-icon"><i data-lucide="bar-chart-3"></i></div>
+                            <h3>Interactive Visualizations</h3>
+                            <p>Plot opening/closing trends, trading volume, volatility ranges, and simple moving averages (20-day & 50-day) with precise date selectors.</p>
+                        </div>
+                        <div class="glass-card feature-card">
+                            <div class="feature-icon"><i data-lucide="pocket-knife"></i></div>
+                            <h3>CSV Upload Support</h3>
+                            <p>Upload any standard historical Yahoo Finance CSV files to immediately update calculations, metrics, charts, and tables.</p>
+                        </div>
+                        <div class="glass-card feature-card">
+                            <div class="feature-icon"><i data-lucide="gem"></i></div>
+                            <h3>Key Metrics Dashboard</h3>
+                            <p>Display average prices, trading volumes, and historical highs and lows, complete with details on the exact dates they occurred.</p>
+                        </div>
+                        <div class="glass-card feature-card">
+                            <div class="feature-icon"><i data-lucide="brain"></i></div>
+                            <h3>Automated Insights</h3>
+                            <p>Discover volatility coefficients, optimal trading periods, record volumes, and algorithmic crossover indicators (Golden/Death Crosses).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 2: Dashboard View -->
+            <section id="view-dashboard" class="view-section">
+                <!-- Metrics Grid -->
+                <div id="metrics-grid" class="metrics-grid">
+                    <!-- Total Trading Days -->
+                    <div class="glass-card metric-card animate-card" style="--order: 1;">
+                        <div class="metric-header">
+                            <span class="metric-title">Total Trading Days</span>
+                            <div class="metric-icon blue"><i data-lucide="calendar"></i></div>
+                        </div>
+                        <div id="metric-total-days" class="metric-value">---</div>
+                        <div class="metric-footer">Historical days analyzed</div>
+                    </div>
+                    <!-- Average Open Price -->
+                    <div class="glass-card metric-card animate-card" style="--order: 2;">
+                        <div class="metric-header">
+                            <span class="metric-title">Average Open Price</span>
+                            <div class="metric-icon cyan"><i data-lucide="arrow-right-left"></i></div>
+                        </div>
+                        <div id="metric-avg-open" class="metric-value">---</div>
+                        <div class="metric-footer">Mean open quote value</div>
+                    </div>
+                    <!-- Average Close Price -->
+                    <div class="glass-card metric-card animate-card" style="--order: 3;">
+                        <div class="metric-header">
+                            <span class="metric-title">Average Close Price</span>
+                            <div class="metric-icon purple"><i data-lucide="dollar-sign"></i></div>
+                        </div>
+                        <div id="metric-avg-close" class="metric-value">---</div>
+                        <div class="metric-footer">Mean close quote value</div>
+                    </div>
+                    <!-- Highest Price -->
+                    <div class="glass-card metric-card animate-card" style="--order: 4;">
+                        <div class="metric-header">
+                            <span class="metric-title">Highest Stock Price</span>
+                            <div class="metric-icon green"><i data-lucide="trending-up"></i></div>
+                        </div>
+                        <div id="metric-high-price" class="metric-value">---</div>
+                        <div id="metric-high-date" class="metric-footer">Date: --</div>
+                    </div>
+                    <!-- Lowest Price -->
+                    <div class="glass-card metric-card animate-card" style="--order: 5;">
+                        <div class="metric-header">
+                            <span class="metric-title">Lowest Stock Price</span>
+                            <div class="metric-icon red"><i data-lucide="trending-down"></i></div>
+                        </div>
+                        <div id="metric-low-price" class="metric-value">---</div>
+                        <div id="metric-low-date" class="metric-footer">Date: --</div>
+                    </div>
+                    <!-- Average Volume -->
+                    <div class="glass-card metric-card animate-card" style="--order: 6;">
+                        <div class="metric-header">
+                            <span class="metric-title">Average Volume</span>
+                            <div class="metric-icon orange"><i data-lucide="activity"></i></div>
+                        </div>
+                        <div id="metric-avg-volume" class="metric-value">---</div>
+                        <div class="metric-footer">Daily shares traded</div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Controls -->
+                <div class="glass-card dashboard-controls">
+                    <div class="controls-group">
+                        <span class="controls-label"><i data-lucide="sliders-horizontal"></i> Filters:</span>
+                        <div class="preset-buttons">
+                            <button id="filter-btn-1m" class="btn btn-sm btn-filter" onclick="setDateFilterPreset('1m')">1M</button>
+                            <button id="filter-btn-6m" class="btn btn-sm btn-filter" onclick="setDateFilterPreset('6m')">6M</button>
+                            <button id="filter-btn-1y" class="btn btn-sm btn-filter" onclick="setDateFilterPreset('1y')">1Y</button>
+                            <button id="filter-btn-5y" class="btn btn-sm btn-filter" onclick="setDateFilterPreset('5y')">5Y</button>
+                            <button id="filter-btn-all" class="btn btn-sm btn-filter active" onclick="setDateFilterPreset('all')">All Time</button>
+                        </div>
+                    </div>
+                    <div class="controls-group dates-group">
+                        <div class="date-input-wrap">
+                            <label for="date-start">Start:</label>
+                            <input type="date" id="date-start" class="date-picker">
+                        </div>
+                        <div class="date-input-wrap">
+                            <label for="date-end">End:</label>
+                            <input type="date" id="date-end" class="date-picker">
+                        </div>
+                        <button id="apply-dates-btn" class="btn btn-primary btn-sm" onclick="applyCustomDates()">Apply</button>
+                    </div>
+                </div>
+
+                <!-- Charts Container Grid -->
+                <div class="charts-grid">
+                    <!-- Closing Price Chart -->
+                    <div class="glass-card chart-card">
+                        <div class="chart-header">
+                            <h3>Closing Price Trend</h3>
+                            <div class="chart-badge">Line Chart</div>
+                        </div>
+                        <div class="chart-canvas-container">
+                            <canvas id="chart-closing"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Opening Price Chart -->
+                    <div class="glass-card chart-card">
+                        <div class="chart-header">
+                            <h3>Opening Price Trend</h3>
+                            <div class="chart-badge">Line Chart</div>
+                        </div>
+                        <div class="chart-canvas-container">
+                            <canvas id="chart-opening"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- High vs Low Chart -->
+                    <div class="glass-card chart-card">
+                        <div class="chart-header">
+                            <h3>High vs Low Comparison</h3>
+                            <div class="chart-badge">Extreme Range</div>
+                        </div>
+                        <div class="chart-canvas-container">
+                            <canvas id="chart-highlow"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Trading Volume Chart -->
+                    <div class="glass-card chart-card">
+                        <div class="chart-header">
+                            <h3>Trading Volume Analysis</h3>
+                            <div class="chart-badge">Bar Chart</div>
+                        </div>
+                        <div class="chart-canvas-container">
+                            <canvas id="chart-volume"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Moving Averages Chart -->
+                    <div class="glass-card chart-card full-width-chart">
+                        <div class="chart-header">
+                            <h3>Simple Moving Average Trend (20-day vs 50-day SMA)</h3>
+                            <div class="chart-badge">SMA Technicals</div>
+                        </div>
+                        <div class="chart-canvas-container">
+                            <canvas id="chart-sma"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3: Dataset Overview View -->
+            <section id="view-dataset" class="view-section">
+                <div class="glass-card dataset-container">
+                    <div class="dataset-header-toolbar">
+                        <h2 class="section-title">Historical Records Explorer</h2>
+                        
+                        <div class="table-controls">
+                            <!-- Search -->
+                            <div class="search-box">
+                                <i data-lucide="search" class="search-icon"></i>
+                                <input type="text" id="table-search" placeholder="Search by Date (YYYY-MM-DD)..." oninput="handleTableSearch()">
+                            </div>
+                            
+                            <!-- Year Filter -->
+                            <select id="filter-year" class="select-picker" onchange="handleTableFilters()">
+                                <option value="all">All Years</option>
+                            </select>
+                            
+                            <!-- Month Filter -->
+                            <select id="filter-month" class="select-picker" onchange="handleTableFilters()">
+                                <option value="all">All Months</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            
+                            <!-- Items Per Page -->
+                            <div class="page-size-wrap">
+                                <label for="table-pagesize">Rows:</label>
+                                <select id="table-pagesize" class="select-picker select-sm" onchange="handlePageSizeChange()">
+                                    <option value="10">10</option>
+                                    <option value="20" selected>20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Responsive Table -->
+                    <div class="table-responsive">
+                        <table id="data-table" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable('Date')">Date <span id="sort-icon-Date" class="sort-icon">&#8597;</span></th>
+                                    <th onclick="sortTable('Open')">Open <span id="sort-icon-Open" class="sort-icon">&#8597;</span></th>
+                                    <th onclick="sortTable('High')">High <span id="sort-icon-High" class="sort-icon">&#8597;</span></th>
+                                    <th onclick="sortTable('Low')">Low <span id="sort-icon-Low" class="sort-icon">&#8597;</span></th>
+                                    <th onclick="sortTable('Close')">Close <span id="sort-icon-Close" class="sort-icon">&#8597;</span></th>
+                                    <th onclick="sortTable('Adj Close')">Adj Close <span id="sort-icon-AdjClose" class="sort-icon">&#8597;</span></th>
+                                    <th onclick="sortTable('Volume')">Volume <span id="sort-icon-Volume" class="sort-icon">&#8597;</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Loaded dynamically via app.js -->
+                                <tr>
+                                    <td colspan="7" class="text-center">Loading AAPL historical stock data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Table Pagination Footer -->
+                    <div class="table-pagination">
+                        <div id="table-info" class="pagination-info">
+                            Showing 0 to 0 of 0 entries
+                        </div>
+                        <div class="pagination-buttons">
+                            <button id="btn-page-prev" class="btn btn-secondary btn-sm" onclick="changePage(-1)">
+                                <i data-lucide="chevron-left"></i> Previous
+                            </button>
+                            <span id="pagination-pages" class="pagination-page-indicator">
+                                Page <span id="current-page-num">1</span> of <span id="total-page-num">1</span>
+                            </span>
+                            <button id="btn-page-next" class="btn btn-secondary btn-sm" onclick="changePage(1)">
+                                Next <i data-lucide="chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 4: Insights View -->
+            <section id="view-insights" class="view-section">
+                <div class="insights-layout">
+                    
+                    <div class="insights-summary-grid">
+                        <!-- Overall Trend Card -->
+                        <div class="glass-card insight-card">
+                            <div class="insight-header">
+                                <div class="insight-icon blue"><i data-lucide="trending-up"></i></div>
+                                <h3>Overall Stock Trend</h3>
+                            </div>
+                            <div class="insight-content">
+                                <p id="insight-trend-desc">Calculating performance metrics...</p>
+                                <ul class="insight-details">
+                                    <li>Total Change: <strong id="insight-total-change" class="text-gain">---</strong></li>
+                                    <li>CAGR (Compound Growth): <strong id="insight-cagr">---</strong></li>
+                                    <li>Market Status: <span id="insight-market-status" class="badge">---</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Best Performing Periods Card -->
+                        <div class="glass-card insight-card">
+                            <div class="insight-header">
+                                <div class="insight-icon green"><i data-lucide="sparkles"></i></div>
+                                <h3>Best Performing Periods</h3>
+                            </div>
+                            <div class="insight-content">
+                                <p id="insight-periods-desc">Evaluating historical streaks...</p>
+                                <ul class="insight-details">
+                                    <li>Top Yearly Gain: <strong id="insight-best-year">---</strong></li>
+                                    <li>Top Monthly Gain: <strong id="insight-best-month">---</strong></li>
+                                    <li>Max Cons. Up Days: <strong id="insight-green-streak">---</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Highest Volume Card -->
+                        <div class="glass-card insight-card">
+                            <div class="insight-header">
+                                <div class="insight-icon orange"><i data-lucide="zap"></i></div>
+                                <h3>Peak Trading Volume</h3>
+                            </div>
+                            <div class="insight-content">
+                                <p id="insight-volume-desc">Identifying massive trade volumes...</p>
+                                <ul class="insight-details">
+                                    <li>Highest Volume Day: <strong id="insight-peak-volume-date">---</strong></li>
+                                    <li>Shares Exchanged: <strong id="insight-peak-volume-qty">---</strong></li>
+                                    <li>Close Price on Day: <strong id="insight-peak-volume-price">---</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Price Volatility Card -->
+                        <div class="glass-card insight-card">
+                            <div class="insight-header">
+                                <div class="insight-icon red"><i data-lucide="shield-alert"></i></div>
+                                <h3>Price Volatility Analysis</h3>
+                            </div>
+                            <div class="insight-content">
+                                <p id="insight-volatility-desc">Measuring stock risk factors...</p>
+                                <ul class="insight-details">
+                                    <li>Avg Daily Trading Range: <strong id="insight-avg-range">---</strong></li>
+                                    <li>Max Single Day Swing: <strong id="insight-max-swing">---</strong></li>
+                                    <li>Standard Deviation: <strong id="insight-std-dev">---</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Investment Observations Card -->
+                    <div class="glass-card observations-card">
+                        <div class="observations-header">
+                            <div class="insight-icon purple"><i data-lucide="eye"></i></div>
+                            <h3>Investment & Technical Observations</h3>
+                        </div>
+                        <div id="observations-body" class="observations-body">
+                            <!-- Populated dynamically via app.js -->
+                            <p>Loading market observations and simple moving average crossover signals...</p>
+                        </div>
+                    </div>
+
+                    <!-- Export and Print Options -->
+                    <div class="glass-card export-actions-card">
+                        <div class="export-header">
+                            <i data-lucide="download-cloud"></i>
+                            <h3>Report & Export Actions</h3>
+                        </div>
+                        <p>Generate reports based on the active dataset filters and metrics displayed on the dashboard.</p>
+                        <div class="export-buttons">
+                            <button id="download-md-report" class="btn btn-secondary" onclick="downloadMarkdownReport()">
+                                <i data-lucide="file-text"></i> Download Markdown Report
+                            </button>
+                            <button id="print-pdf-report" class="btn btn-primary" onclick="printDashboardReport()">
+                                <i data-lucide="printer"></i> Print PDF Report / Save PDF
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer id="app-footer" class="app-footer">
+            <div class="footer-left">
+                <span class="copyright">&copy; 2026 Apple Stock Data Analysis Project.</span>
+                <span class="developer-credit">Developed by <strong>Siri Chandana Boga</strong></span>
+            </div>
+            <div class="footer-right">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+                    <i data-lucide="github"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+                    <i data-lucide="linkedin"></i>
+                </a>
+                <a href="mailto:sirichandana.boga@email.com" class="social-link" title="Email">
+                    <i data-lucide="mail"></i>
+                </a>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
