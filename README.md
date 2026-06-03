@@ -55,5 +55,5 @@ The goal of this project is to analyze Apple stock market data to:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/apple-stock-analysis.git
-cd apple-stock-analysis
+git clone https://github.com/BogaSirichandana/Apple_Stock_Data_Analysis.git
+cd Apple_Stock_Data_Analysis
