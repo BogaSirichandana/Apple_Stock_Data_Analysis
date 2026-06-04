@@ -52,6 +52,8 @@ The goal of this project is to analyze Apple stock market data to:
 ---
 
 #live demo image
+
+
 <img width="695" height="470" alt="Screenshot 2026-06-04 112109" src="https://github.com/user-attachments/assets/018b378c-e3e7-40a7-8d98-f90fc7fa8497" />
 
 
