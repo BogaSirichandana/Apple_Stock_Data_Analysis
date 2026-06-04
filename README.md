@@ -57,3 +57,7 @@ The goal of this project is to analyze Apple stock market data to:
 ```bash
 git clone https://github.com/BogaSirichandana/Apple_Stock_Data_Analysis.git
 cd Apple_Stock_Data_Analysis
+
+#live demo image
+<img width="695" height="470" alt="image" src="https://github.com/user-attachments/assets/2d90f844-228c-4d3c-9873-25e7a634ca64" />
+
