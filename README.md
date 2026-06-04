@@ -51,6 +51,10 @@ The goal of this project is to analyze Apple stock market data to:
 
 ---
 
+#live demo image
+<img width="695" height="470" alt="Screenshot 2026-06-04 112109" src="https://github.com/user-attachments/assets/018b378c-e3e7-40a7-8d98-f90fc7fa8497" />
+
+
 ## 🚀 How to Run the Project
 
 ### 1. Clone the repository
@@ -58,6 +62,6 @@ The goal of this project is to analyze Apple stock market data to:
 git clone https://github.com/BogaSirichandana/Apple_Stock_Data_Analysis.git
 cd Apple_Stock_Data_Analysis
 
-#live demo image
-<img width="695" height="470" alt="image" src="https://github.com/user-attachments/assets/2d90f844-228c-4d3c-9873-25e7a634ca64" />
+
+ 
 
