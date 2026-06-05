@@ -1004,27 +1004,26 @@ function renderCharts() {
 
 
 // ===============================
-// TABLE VARIABLES
+// TABLE VARIABLES (using existing global vars)
 // ===============================
 
-let tableData = [];
-let currentPage = 1;
-let rowsPerPage = 20;
-
-let currentSortColumn = "Date";
-let currentSortDirection = "desc";
+// Note: tableData, currentPage, rowsPerPage, 
+// currentSortColumn, currentSortDirection
+// are declared at the top of the file
 
 
 // ===============================
-// POPULATE YEAR FILTER
+// POPULATE YEAR FILTER (with reset)
 // ===============================
 
-function populateYearFilter() {
+function populateYearFilterWithReset() {
 
     const yearSelect =
         document.getElementById(
             "filter-year"
         );
+
+    if (!yearSelect) return;
 
     yearSelect.innerHTML =
         '<option value="all">All Years</option>';
