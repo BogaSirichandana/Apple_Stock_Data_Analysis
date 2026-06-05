@@ -1,0 +1,29 @@
+{
+  "name": "apple-stock-data-analysis",
+  "version": "1.0.0",
+  "description": "An interactive Apple (AAPL) stock data analysis dashboard with key metrics, visualizations, and automated investment insights",
+  "author": "Siri Chandana Boga",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "npx serve -s . -l 3000",
+    "dev": "npx serve -s . -l 3000",
+    "preview": "npx serve -s . -l 3000"
+  },
+  "keywords": [
+    "apple",
+    "stock",
+    "data-analysis",
+    "dashboard",
+    "visualization",
+    "chart.js",
+    "finance"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BogaSirichandana/Apple_Stock_Data_Analysis"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

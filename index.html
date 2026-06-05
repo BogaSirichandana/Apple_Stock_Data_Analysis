@@ -2,10 +2,36 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta name="description" content="An interactive, high-fidelity Apple (AAPL) stock data analysis dashboard with key metrics, visualizations, and automated investment insights.">
     <meta name="author" content="Siri Chandana Boga">
-    <title>Apple Stock Data Analysis Dashboard</title>
+    <meta name="keywords" content="Apple stock, AAPL, stock analysis, data visualization, trading dashboard, stock metrics, moving averages, investment insights">
+    <meta name="robots" content="index, follow">
+    <title>Apple Stock Data Analysis Dashboard | AAPL Historical Data Visualization</title>
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Apple Stock Data Analysis Dashboard">
+    <meta property="og:description" content="Interactive Apple (AAPL) stock data analysis with charts, metrics, and investment insights from 1980 to present.">
+    <meta property="og:url" content="https://apple-stock-data-analysis.vercel.app">
+    <meta property="og:site_name" content="AAPL Analyzer">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Apple Stock Data Analysis Dashboard">
+    <meta name="twitter:description" content="Interactive Apple (AAPL) stock data analysis with charts, metrics, and investment insights.">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#050810" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)">
+    <meta name="color-scheme" content="dark light">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://apple-stock-data-analysis.vercel.app">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,11 +42,14 @@
     <link rel="stylesheet" href="styles.css">
     
     <!-- Chart.js and PapaParse via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js" defer></script>
     
     <!-- Lucide Icons -->
-    <script src="app.js"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    
+    <!-- Application Script -->
+    <script src="app.js" defer></script>
 </head>
 <body>
     <!-- App Container -->

@@ -1,0 +1,8 @@
+# Apple Stock Data Analysis Dashboard
+# https://github.com/BogaSirichandana/Apple_Stock_Data_Analysis
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://apple-stock-data-analysis.vercel.app/sitemap.xml
