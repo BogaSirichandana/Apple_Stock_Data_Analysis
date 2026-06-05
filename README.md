@@ -169,8 +169,7 @@ This project is open source and available under the [MIT License](LICENSE).
 **Siri Chandana Boga**
 - GitHub: [@BogaSirichandana](https://github.com/BogaSirichandana)
 
-- live demo link:
-- https://apple-stock-data-analysis-8.onrender.com
+ 
 
 ## Acknowledgments
 
@@ -178,3 +177,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - [PapaParse](https://www.papaparse.com/) - CSV parsing
 - [Lucide Icons](https://lucide.dev/) - Icon library
 - [Yahoo Finance](https://finance.yahoo.com/) - Stock data source
+
+
+# Live Demo Link:
+https://apple-stock-data-analysis-8.onrender.com
